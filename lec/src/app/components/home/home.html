@@ -1,0 +1,74 @@
+<h1>Toto Quantity: {{ getTotalQuantity() }} </h1>
+<h1>Selected Category ID: {{ selectedCategoryId }} </h1>
+
+
+<div class="form-floating">
+  <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+    [(ngModel)]="selectedCategoryId">
+
+    <option selected value=0 [ngClass]="categories.length<=0 ? 'd-none':''">All Categories</option>
+
+    @for (category of categories; track category.id; let i=$index ) {
+    <option [value]="category.id">[{{i+1}}] {{category.name}}</option>
+    }@empty {
+    <option [value]=0>No Categories Available</option>
+    }
+  </select>
+  <label for="floatingSelect">Works with selects</label>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-4 g-4 m-5">
+
+  <div class="card" style="width: 20rem;" *ngFor="let product of products; trackBy:myNgForTracker; let i = index;"
+    [class.d-none]="product.categoryId != selectedCategoryId && selectedCategoryId != 0"
+    [ngClass]="product.quantity === 0? 'emptyQuantity' : 'notEmptyQuantity'">
+
+    @if (!product.imgNumber) {<img [src]="product.img" class="card-img-top" alt="{{product.name}}">}
+    @else if ( product.imgNumber>10) { <img [src]="product.img" class="card-img-top" alt="{{product.name}}">}
+    @else { <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/100.webp" class="card-img-top"
+      alt={{product.name}}>}
+
+    <div class="card-body">
+      <h5 class="card-title">{{i+1}} - {{product.name}}</h5>
+      <p class="card-text">{{product.description}}</p>
+      <p class="card-text">Category:{{product.categoryId}}</p>
+      <p class="card-text">Price: {{product.price | currency:'USD'}}</p>
+
+      <p class="card-text" [style.color]="product.quantity===0 ? 'red' : ''">Quantity: {{product.quantity}}</p>
+
+      @switch (product.quantity) {
+      @case (0) {<p class="card-text" style="color:slategray">Out of stock!</p>}
+      @case (1) { <p class="card-text" style="color:orange">Only 1 item left!</p> }
+      @case (2) {<p class="card-text" style="color:purple">Only 2 items left!</p>}
+      @default {<p class="card-text">Quantity: {{product.quantity}}</p>}
+      }
+
+      <div class="card-text" [ngSwitch]="product.quantity">
+        <p style="color:slategray" *ngSwitchCase=0>out</p>
+        <p style="color:orange" *ngSwitchCase=1>last item</p>
+        <p style="color:purple" *ngSwitchCase=2>last 2 items</p>
+        <p *ngSwitchDefault>{{product.quantity}} items</p>
+      </div>
+
+
+      <input type="number" class="form-control my-2" placeholder="Enter quantity" #quantityInput>
+
+      <button class="btn btn-success mx-1" (click)="addToCart(product, +quantityInput.value||1)"
+        *ngIf="(product.quantity > 0);else secondaryButton">Add</button>
+      <ng-template #secondaryButton>
+        <button class="btn btn-secondary mx-1">Add</button>
+      </ng-template>
+
+
+      @if (product.quantity > 0) {
+      <button class="btn btn-primary mx-1" (click)="buyAll(product)">Buy All</button>
+      }@else {
+      <button class="btn btn-secondary mx-1">Buy All</button>
+      }
+
+      <button class="btn btn-danger mx-1" (click)="removeFromCart(product, +quantityInput.value||1)">Remove</button>
+    </div>
+  </div>
+
+</div>

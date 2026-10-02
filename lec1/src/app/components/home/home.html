@@ -1,0 +1,8 @@
+<h1>{{store.name}}</h1> <!-- interpolation | binding -->
+<img src="{{store.imgUrl}}" alt="my image">
+<img [src]="store.imgUrl" alt="my image"> <!-- property binding -->
+
+<h1 *ngFor="let branch of store.branches">{{branch}}</h1> <!-- before angular 17 -->
+@for (branch of store.branches; track $index) { <!-- after angular 17 -->
+<h1>{{branch}}</h1>
+}
