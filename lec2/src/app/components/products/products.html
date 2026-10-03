@@ -50,14 +50,14 @@
     <input type="number" #countInput />
     <button class="btn btn-success" (click)="buy(+countInput.value,  product.price)">buy</button>
   </div> -->
-  @for (product of products; track $index) {
+  @for (product of filteredProducts; track $index) {
   <div class="col" [class.d-none]="product.catId != categoryValue1">
     <div class="card">
       <!-- <img src="{{product.imgUrl}}" class="card-img-top" alt="..."> -->
       <img [src]="product.imgUrl" class="card-img-top" alt="...">
       <!-- <div class="card-body" appHighlightCard outColor="black"> -->
-      <div class="card-body" appHighlightCard="red" outColor="black">
-        <h5 class="card-title">{{product.name}}</h5>
+      <div class="card-body" appHighlightCard overColor="red" outColor="black">
+        <h5 class="card-title">{{product.name | upperCase:'g':'n'}}</h5>
         <p class="card-text">Price: {{product.price | currency:''}}</p>
         <p class="card-text" [style.color]="(product.quantity<=0) ?'red':'black'">Quantity: {{product.quantity}}</p>
       </div>

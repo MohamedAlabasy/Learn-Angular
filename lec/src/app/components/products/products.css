@@ -1,0 +1,7 @@
+.emptyQuantity {
+  border: 2px solid red;
+}
+
+.notEmptyQuantity {
+  border: 2px solid white;
+}

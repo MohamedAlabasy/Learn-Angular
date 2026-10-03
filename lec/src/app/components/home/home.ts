@@ -3,9 +3,11 @@ import { IProducts } from '../../modules/iproducts';
 import { CurrencyPipe, NgFor, NgClass, NgIf, NgSwitchCase, NgSwitch, NgSwitchDefault } from '@angular/common';
 import { ICategories } from '../../modules/icategories';
 import { FormsModule } from '@angular/forms';
+import { HighlightCard } from '../../directives/highlight-card';
+import { UpperCharacterPipe } from '../../pipes/upper-character-pipe';
 
 @Component({
-  imports: [NgFor, CurrencyPipe, FormsModule, NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault],
+  imports: [NgFor, CurrencyPipe, FormsModule, NgClass, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, HighlightCard, UpperCharacterPipe],
   selector: 'app-home',
   styleUrl: './home.css',
   templateUrl: './home.html',
@@ -83,9 +85,9 @@ export class Home {
     const id: number = this.getRandomNumber(), imgNumber: number = this.getRandomNumber();
     return {
       id,
-      name: `Product ${id}`,
+      name: `product ${id}`,
       img: `https://mdbcdn.b-cdn.net/img/new/standard/nature/1${imgNumber}.webp`,
-      description: `Description for Product ${id}`,
+      description: `description for product ${id}`,
       quantity: this.getRandomNumber(),
       price: this.getRandomNumber(),
       imgNumber,
@@ -100,5 +102,7 @@ export class Home {
   private getRandomCategoryId(): number {
     return [1, 2, 3, 4, 5][Math.floor(Math.random() * 5)];
   }
+
+
 
 }

@@ -3,13 +3,15 @@ import { RouterOutlet } from '@angular/router';
 import { Home } from './components/home/home';
 import { Navbar } from './components/navbar/navbar';
 import { Footer } from './components/footer/footer';
+import { Orders } from './components/orders/orders';
 
 @Component({
   imports: [
     // RouterOutlet,
     Navbar,
     Home,
-    Footer
+    Footer,
+    Orders
   ],
   selector: 'app-root',
   styleUrl: './app.css',

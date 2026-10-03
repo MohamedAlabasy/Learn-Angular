@@ -1,0 +1,18 @@
+<h1>Toto Quantity: {{ getTotalQuantity() }} </h1>
+<h1>Selected Category ID: {{ selectedCategoryId }} </h1>
+
+<div class="form-floating">
+  <select class="form-select" aria-label="Floating label select example" [(ngModel)]="selectedCategoryId">
+    <option selected value=0 [ngClass]="categories.length<=0 ? 'd-none':''">All Categories</option>
+
+    @for (category of categories; track category.id; let i=$index ) {
+    <option [value]="category.id">[{{i+1}}] {{category.name}}</option>
+    }@empty {
+    <option [value]=0>No Categories Available</option>
+    }
+  </select>
+  <label for="floatingSelect">Works with selects</label>
+</div>
+
+<app-products [selectedCategoryId]="selectedCategoryId" (onAddToCart)="addToCart($event)" (onBuyAll)="buyAll($event)"
+  (onRemoveFromCart)="removeFromCart($event)"></app-products>
