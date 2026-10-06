@@ -1,0 +1,45 @@
+<div class="row row-cols-1 row-cols-md-4 g-4 m-5">
+
+  @for (product of products; track product.id;let i =$index) {
+  <div class="card" style="width: 20rem;" [ngClass]="product.quantity === 0? 'emptyQuantity' : 'notEmptyQuantity'">
+
+    @if (!product.img) {<img src="not_found.png" class="card-img-top" alt="{{product.name}}">}
+    @else if ( product.imgNumber>10) { <img [src]="product.img" class="card-img-top" alt="{{product.name}}">}
+    @else { <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/100.webp" class="card-img-top"
+      alt={{product.name}}>}
+
+    <div class="card-body" appHighlightCard>
+      <h5 class="card-title">{{i+1}} - {{product.name |upperCharacter:2}}</h5>
+      <p class="card-text">{{product.description | upperCharacter:0}}</p>
+      <p class="card-text">Category:{{product.categoryId}}</p>
+      <p class="card-text">Price: {{product.price | currency:'USD'}}</p>
+
+      <p class="card-text" [style.color]="product.quantity===0 ? 'red' : ''">Quantity: {{product.quantity}}</p>
+
+      @switch (product.quantity) {
+      @case (0) {<p class="card-text" style="color:slategray">Out of stock!</p>}
+      @case (1) { <p class="card-text" style="color:orange">Only 1 item left!</p> }
+      @case (2) {<p class="card-text" style="color:purple">Only 2 items left!</p>}
+      @default {<p class="card-text">Quantity: {{product.quantity}}</p>}
+      }
+
+      <input type="number" class="form-control my-2" placeholder="Enter quantity" #quantityInput>
+
+      @if(product.quantity > 0){
+      <button class="btn btn-success mx-1" (click)="addToCart(product, +quantityInput.value||1)">Add</button>
+      }@else {
+      <button class="btn btn-secondary mx-1">Add</button>
+      }
+
+      @if (product.quantity > 0) {
+      <button class="btn btn-primary mx-1" (click)="buyAll(product)">Buy All</button>
+      }@else {
+      <button class="btn btn-secondary mx-1">Buy All</button>
+      }
+
+      <button class="btn btn-danger mx-1" (click)="removeFromCart(product, +quantityInput.value||1)">Remove</button>
+    </div>
+  </div>
+  }@empty {<img src="not_found.png" class="card-img-top" alt="not found products">}
+
+</div>

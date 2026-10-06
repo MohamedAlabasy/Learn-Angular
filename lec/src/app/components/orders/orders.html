@@ -14,5 +14,11 @@
   <label for="floatingSelect">Works with selects</label>
 </div>
 
-<app-products [selectedCategoryId]="selectedCategoryId" (onAddToCart)="addToCart($event)" (onBuyAll)="buyAll($event)"
-  (onRemoveFromCart)="removeFromCart($event)"></app-products>
+<!-- <app-products #productComponent [selectedCategoryId]="selectedCategoryId" (onAddToCart)="addToCart($event)"
+  (onBuyAll)="buyAll($event)" (onRemoveFromCart)="removeFromCart($event)"></app-products> -->
+<!-- <app-products [selectedCategoryId]="selectedCategoryId" (onAddToCart)="addToCart($event)" (onBuyAll)="buyAll($event)"
+  (onRemoveFromCart)="removeFromCart($event)"></app-products> -->
+
+
+<app-new-products [selectedCategoryId]="selectedCategoryId" (onAddToCart)="addToCart($event)"
+  (onBuyAll)="buyAll($event)" (onRemoveFromCart)="removeFromCart($event)"></app-new-products>

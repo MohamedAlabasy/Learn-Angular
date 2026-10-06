@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Products } from '../products/products';
 import { ICategories } from '../../modules/icategories';
 import { CommonModule } from '@angular/common';
@@ -7,17 +7,22 @@ import { IProducts } from '../../modules/iproducts';
 import { IAddToCartEvent } from '../../interfaces/iadd-to-cart-event';
 import { IBuyAll } from '../../interfaces/ibuy-all';
 import { IRemoveFromCart } from '../../interfaces/iremove-from-cart';
+import { NewProducts } from '../new-products/new-products';
 
 @Component({
-  imports: [Products, CommonModule, FormsModule],
+  imports: [Products, CommonModule, FormsModule, NewProducts],
   selector: 'app-orders',
   styleUrl: './orders.css',
   templateUrl: './orders.html',
 })
-export class Orders {
+export class Orders implements AfterViewInit {
   protected TotalQuantity: Map<number, number>;
   protected categories: ICategories[];
   protected selectedCategoryId: number;
+
+  // tow way to do this
+  // @ViewChild('productComponent') productComponent!: Products;
+  @ViewChild(Products) productComponent!: Products;
 
   constructor() {
     this.TotalQuantity = new Map<number, number>();
@@ -29,6 +34,10 @@ export class Orders {
       { id: 4, name: 'Category 4' },
       { id: 5, name: 'Category 5' }
     ]
+  }
+
+  ngAfterViewInit(): void {
+    console.log('product component: ', this.productComponent);
   }
 
   protected getTotalQuantity(): number {
